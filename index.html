@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stackly Cloud Services - Worldclass Design</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    /* Reset */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      overflow-x: hidden;
+      cursor: none; /* Hide default cursor for custom */
+      transition: background-color 0.5s ease, color 0.5s ease;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Cursor */
+    .cursor, .cursor-follower {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.3s ease;
+      z-index: 10000;
+      mix-blend-mode: difference;
+    }
+    .cursor {
+      width: 8px; height: 8px;
+      background-color: white;
+      z-index: 10001;
+    }
+    .cursor-follower {
+      width: 35px; height: 35px;
+      background: rgba(255, 255, 255, 0.15);
+      transition: transform 0.15s ease-out;
+      filter: blur(4px);
+    }
+
+    /* Dark mode body alternate color for toggle */
+    body.dark {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Light mode text color fixes */
+    body.dark a,
+    body.dark .service-card h3,
+    body.dark .service-card p,
+    body.dark .home-section h2,
+    body.dark .home-section p,
+    body.dark .testimonial,
+    body.dark .testimonial-author,
+    body.dark .infrastructure h2,
+    body.dark .infrastructure p,
+    body.dark .pricing-overview h2,
+    body.dark .pricing-overview p,
+    body.dark .pricing-card,
+    body.dark footer {
+      color: #0f172a !important;
+    }
+
+    body.dark nav a {
+      color: #0f172a !important;
+    }
+
+    body.dark nav a:hover,
+    body.dark nav a:focus {
+      color: #d97706 !important;
+    }
+
+    body.dark .hero-text p {
+      color: #333 !important;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1240px;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 999;
+      transition: background-color 0.5s ease;
+    }
+    header.dark {
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    header .logo svg {
+      width: 36px;
+      height: 36px;
+      fill: #ff9900;
+      filter: drop-shadow(0 2px 4px rgba(255, 153, 0, 0.7));
+      flex-shrink: 0;
+      transition: fill 0.4s ease;
+    }
+    header .logo span {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #ff9900;
+      user-select: none;
+      font-family: 'Poppins', sans-serif;
+      transition: color 0.5s ease;
+    }
+    header.dark .logo svg {
+      fill: #d97706;
+      filter: drop-shadow(0 2px 4px rgba(217, 119, 6, 0.7));
+    }
+    header.dark .logo span {
+      color: #d97706;
+    }
+    
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 600;
+      color: #f8fafc;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+    nav a:hover, nav a:focus {
+      color: #ffbb33;
+      outline: none;
+    }
+    header.dark nav a {
+      color: #0f172a;
+    }
+    header.dark nav a:hover, header.dark nav a:focus {
+      color: #d97706;
+    }
+
+    /* Dark mode toggle */
+    #toggleDark {
+      cursor: pointer;
+      width: 36px;
+      height: 20px;
+      background: #ff9900;
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.4s ease;
+      border: none;
+    }
+    #toggleDark:focus {
+      outline: 2px solid #ffbb33;
+      outline-offset: 2px;
+    }
+    #toggleDark:before {
+      content: '';
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 16px; height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: left 0.4s ease;
+    }
+    body.dark #toggleDark {
+      background: #d97706;
+    }
+    body.dark #toggleDark:before {
+      left: 18px;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: visible;
+      z-index: 1;
+    }
+    .hero-text {
+      max-width: 600px;
+      z-index: 10;
+    }
+    .hero-text h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
+    .hero-text p {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 2.5rem;
+      color: #f0f0f0cc;
+      line-height: 1.6;
+      transition: color 0.5s ease;
+    }
+    .hero-text button {
+      background: #ff9900;
+      border: none;
+      border-radius: 30px;
+      padding: 0.9rem 2.8rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #222;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255 153 0 / 0.6);
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .hero-text button:hover, .hero-text button:focus {
+      background-color: #ffbb33;
+      box-shadow: 0 10px 40px rgba(255 187 51 / 0.8);
+      outline: none;
+    }
+    /* Ripple effect */
+    .hero-text button::after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background: rgba(255, 255, 255, 0.4);
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.4s ease, opacity 0.6s ease;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-text button:active::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      transition: 0s;
+    }
+
+    /* Animated gradient blob backgrounds */
+    .blob-1, .blob-2 {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.6;
+      animation: blobMove 12s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+    .blob-1 {
+      background: linear-gradient(45deg, #ff7a18, #af002d 70%);
+      width: 320px;
+      height: 320px;
+      top: 10%;
+      left: 10%;
+    }
+    .blob-2 {
+      background: linear-gradient(45deg, #00dbde, #fc00ff);
+      width: 280px;
+      height: 280px;
+      bottom: 20%;
+      right: 15%;
+      animation-delay: 6s;
+    }
+    @keyframes blobMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(30px, -40px) scale(1.1);
+      }
+    }
+
+    .hero-image {
+      max-width: 480px;
+      position: relative;
+      z-index: 10;
+    }
+    .hero-image svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+      user-select: none;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Services */
+    section.services {
+      max-width: 1240px;
+      margin: 5rem auto 3rem auto;
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2.5rem;
+      z-index: 10;
+      position: relative;
+    }
+    .service-card {
+      background: rgba(255 255 255 / 0.1);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgb(0 0 0 / 0.25);
+      padding: 2rem 1.8rem 2.5rem 1.8rem;
+      color: #e9e9e9;
+      transition: transform 0.35s cubic-bezier(0.2,0.8,0.4,1), box-shadow 0.35s ease, background-color 0.35s ease;
+      cursor: pointer;
+      overflow: hidden;
+      user-select: none;
+      position: relative;
+    }
+    .service-card:hover, .service-card:focus-within{
+      transform: translateY(-15px) scale(1.05);
+      background: rgba(255 255 255 / 0.25);
+      box-shadow: 0 15px 40px rgb(255 153 0 / 0.45);
+      outline: none;
+      color: #ffcc33;
+      z-index: 10;
+    }
+    .service-card h3 {
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      transition: color 0.35s ease;
+    }
+    .service-card p {
+      line-height: 1.5;
+      font-weight: 500;
+      color: #ddd;
+      transition: color 0.35s ease;
+    }
+
+    /* Service icons animations */
+    .service-icon {
+      width: 50px;
+      margin-bottom: 1.2rem;
+      fill: #ff9900;
+      filter: drop-shadow(0 2px 3px #ffbb33aa);
+      transition: fill 0.35s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .service-card:hover .service-icon, .service-card:focus-within .service-icon {
+      fill: #ffcc33;
+      filter: drop-shadow(0 4px 6px #ffd966cc);
+    }
+
+    /* Expanded homepage content */
+    .home-section {
+      max-width: 1000px;
+      margin: 4rem auto 2rem auto;
+      padding: 0 3rem;
+      text-align: center;
+      color: #ddd;
+      transition: color 0.5s ease;
+    }
+    .home-section h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #ffcc33;
+      text-shadow: 1px 1px 6px rgba(255, 204, 51, 0.5);
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .home-section p {
+      font-size: 1.2rem;
+      line-height: 1.55;
+      max-width: 700px;
+      margin: 0 auto 3rem auto;
+      color: #ccc;
+      font-weight: 500;
+      transition: color 0.5s ease;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: rgba(255 255 255 / 0.05);
+      box-shadow: inset 0 0 30px rgba(255 204 51 / 0.15);
+      border-radius: 20px;
+      padding: 3rem 1.5rem;
+      margin-top: 3rem;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    .testimonial {
+      margin-bottom: 2.2rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #eee;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .testimonial-author {
+      margin-top: 0.8rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #ffcc33;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+
+    /* Global infrastructure */
+    .infrastructure {
+      margin-top: 4rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      transition: color 0.5s ease;
+    }
+    .infrastructure h2 {
+      color: #ffbb33;
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .infrastructure p {
+      max-width: 750px;
+      margin: 0 auto 3rem auto;
+      font-weight: 500;
+      color: #ddd;
+      font-size: 1.15rem;
+      transition: color 0.5s ease;
+    }
+    .infrastructure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgb(255 204 51 / 0.4);
+      user-select: none;
+    }
+
+    /* Pricing highlights */
+    .pricing-overview {
+      margin: 5rem auto 4rem auto;
+      text-align: center;
+      transition: color 0.5s ease;
+    }
+    .pricing-overview h2 {
+      color: #ffd24d;
+      font-weight: 700;
+      font-size: 2.5rem;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .pricing-overview p {
+      max-width: 700px;
+      margin: 1rem auto 3rem auto;
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: #eee;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .pricing-cards {
+      display: flex;
+      justify-content: center;
+      gap: 2.8rem;
+      flex-wrap: wrap;
+    }
+    .pricing-card {
+      background: rgba(255 255 255 / 0.1);
+      padding: 2rem 2.5rem;
+      border-radius: 18px;
+      width: 280px;
+      box-shadow: 0 12px 35px rgb(255 153 0 / 0.4);
+      transition: transform 0.3s ease;
+      color: #fff;
+      user-select: none;
+      cursor: default;
+    }
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 18px 48px rgb(255 187 51 / 0.7);
+    }
+    .pricing-card h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #ffe066;
+      transition: color 0.5s ease;
+    }
+    .pricing-card .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #ffbb33;
+      transition: color 0.5s ease;
+    }
+    .pricing-card ul {
+      list-style: none;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ddd;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      padding-left: 0;
+      transition: color 0.5s ease;
+    }
+    .pricing-card ul li {
+      margin-bottom: 0.6rem;
+    }
+    .pricing-card button {
+      width: 100%;
+      background: #ff9900;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #222;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255 153 0 / 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .pricing-card button:hover {
+      background: #ffd24d;
+      box-shadow: 0 10px 30px rgba(255 210 77 / 0.8);
+      outline: none;
+    }
+
+
+    /* Sticky floating button */
+    .floating-btn {
+      position: fixed;
+      bottom: 2.8rem;
+      right: 2.8rem;
+      background: #ff9900;
+      color: #222;
+      border: none;
+      border-radius: 40px;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 12px 28px rgba(255 153 0 / 0.7);
+      cursor: pointer;
+      z-index: 9999;
+      user-select: none;
+      overflow: hidden;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .floating-btn:hover {
+      background-color: #ffbb33;
+      box-shadow: 0 16px 36px rgba(255 187 51 / 0.9);
+    }
+    /* Ripple effect on floating button */
+    .floating-btn::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      width: 150%;
+      height: 150%;
+      background: rgba(255, 255, 255, 0.4);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s ease, opacity 0.6s ease;
+      z-index: 1;
+    }
+    .floating-btn:active::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      transition: 0s;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 1.4rem 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      user-select: none;
+      transition: color 0.5s ease, background-color 0.5s ease;
+    }
+    body.dark footer {
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 2rem;
+        text-align: center;
+        gap: 4rem;
+      }
+      .hero-text h1 {
+        font-size: 2.8rem;
+      }
+      section.services {
+        grid-template-columns: 1fr;
+        padding: 0 2rem;
+      }
+      header {
+        padding: 1rem 1.5rem;
+      }
+      nav {
+        gap: 1.2rem;
+      }
+      .home-section {
+        padding: 0 2rem;
+      }
+      .pricing-cards {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .hero-text p, .home-section p, .infrastructure p {
+        font-size: 1.1rem;
+      }
+      .infrastructure h2 {
+        font-size: 2rem;
+      }
+      .pricing-overview h2 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <header id="header" role="banner">
+<div class="logo" tabindex="0" aria-label="Stackly Cloud Home">
+  <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Cloud Logo" style="width:36px; height:36px; object-fit: contain;" />
+  <span>Stackly Cloud</span>
+</div>
+    <nav role="navigation" aria-label="Primary navigation">
+      <a href="#" tabindex="0">Products</a>
+      <a href="#" tabindex="0">Solutions</a>
+      <a href="#" tabindex="0">Pricing</a>
+      <a href="#" tabindex="0">Documentation</a>
+      <a href="#" tabindex="0">Support</a>
+      <a href="#" tabindex="0">Sign In</a>
+      <button id="toggleDark" aria-pressed="false" aria-label="Toggle dark mode"></button>
+    </nav>
+  </header>
+
+  <section class="hero" role="region" aria-labelledby="hero-title" aria-describedby="hero-desc">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <div class="hero-text">
+      <h1 id="hero-title">Future-proof Your Cloud Infrastructure</h1>
+      <p id="hero-desc">Experience innovative, scalable, and secure cloud services designed to empower your business and accelerate growth.</p>
+      <button aria-label="Get started with Stackly Cloud for free">Get Started</button>
+    </div>
+    <div class="hero-image" aria-hidden="true">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" >
+        <path fill="#FF9900" d="M43.5,-63.3C57.5,-52.6,65.3,-35.4,69.9,-17C74.5,1.4,75.9,20.7,67.6,32.6C59.4,44.5,41.5,49.1,26.5,59.6C11.5,70.1,-0.5,86.4,-15.8,91.8C-31.2,97.1,-50,91.6,-58.5,78C-67,64.4,-65.2,42.8,-66.1,24.1C-67,5.4,-70.7,-9,-62.8,-20.8C-54.9,-32.6,-35.4,-41.7,-21.9,-53.5C-8.5,-65.3,0,-79.9,13.3,-82.3C26.6,-84.6,53.1,-82,43.5,-63.3Z" transform="translate(100 100)" />
+      </svg>
+    </div>
+  </section>
+
+  <section class="services" aria-label="Core Stackly Cloud Services">
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="compute">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2a30 30 0 1 0 0 60 30 30 0 0 0 0-60Zm0 54a24 24 0 0 1 0-48 24 24 0 0 1 0 48Z"/></svg>
+      <h3 id="compute">Compute Power</h3>
+      <p>Launch virtual servers on demand with high performance and flexible configurations.</p>
+    </article>
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="storage">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/></svg>
+      <h3 id="storage">Storage Solutions</h3>
+      <p>Durable, secure, and scalable storage options for all your data needs.</p>
+    </article>
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="networking">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 32h40M32 12v40"/></svg>
+      <h3 id="networking">Networking</h3>
+      <p>Build isolated and scalable networks with enhanced security controls.</p>
+    </article>
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="database">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="36" rx="20" ry="12"/></svg>
+      <h3 id="database">Database Services</h3>
+      <p>Managed relational and NoSQL databases designed for performance and reliability.</p>
+    </article>
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="ml">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 54l44-44"/></svg>
+      <h3 id="ml">Machine Learning</h3>
+      <p>Use powerful tools to build, train, and deploy machine learning models at scale.</p>
+    </article>
+    <article class="service-card" tabindex="0" role="region" aria-labelledby="security">
+      <svg class="service-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4L12 20v24l20 16 20-16V20z"/></svg>
+      <h3 id="security">Security &amp; Compliance</h3>
+      <p>Protect your cloud infrastructure with comprehensive security and compliance tools.</p>
+    </article>
+  </section>
+
+  <section class="home-section" aria-labelledby="why-stackly">
+    <h2 id="why-stackly">Why Choose Stackly?</h2>
+    <p>Stackly Cloud delivers industry-leading cloud infrastructure designed to scale seamlessly with your needs. Enjoy unmatched uptime, cutting-edge security, and flexible pricing tailored for businesses of all sizes.</p>
+  </section>
+
+  <section class="home-section" aria-labelledby="trusted-by">
+    <h2 id="trusted-by">Trusted By Leading Enterprises Worldwide</h2>
+    <p>Our robust cloud services support thousands of enterprises globally across industries including finance, healthcare, technology, and government — delivering secure, reliable solutions.</p>
+  </section>
+
+  <section class="testimonials" aria-label="Customer Testimonials">
+    <blockquote class="testimonial" tabindex="0">
+      “Stackly's cloud solutions have transformed our IT infrastructure. The scalability and support are truly exceptional — enabling us to innovate faster and more securely.”
+      <footer class="testimonial-author">– Rajesh Kumar, CTO of TechSphere</footer>
+    </blockquote>
+    <blockquote class="testimonial" tabindex="0">
+      “The flexibility and global reach of Stackly Cloud have helped our startup grow rapidly with minimal overhead. Their uptime and security give us real peace of mind.”
+      <footer class="testimonial-author">– Anjali Mehta, Founder of DataWave</footer>
+    </blockquote>
+  </section>
+
+  <section class="infrastructure" aria-labelledby="global-infra">
+    <h2 id="global-infra">Global Network Infrastructure</h2>
+    <p>Operate worldwide with data centers strategically located around the globe. Our infrastructure delivers low latency, high availability, and regional compliance to support your global operations seamlessly.</p>
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Global data center map" />
+  </section>
+
+  <section class="pricing-overview" aria-labelledby="pricing">
+    <h2 id="pricing">Simple, Transparent Pricing</h2>
+    <p>No hidden costs. Scale usage with flexible pay-as-you-go plans or save with reserved options — all backed by a cost calculator and expert support.</p>
+    <div class="pricing-cards">
+      <div class="pricing-card" tabindex="0" aria-label="Basic plan pricing">
+        <h3>Basic</h3>
+        <div class="price">$0<span style="font-size: 1rem;"> / mo</span></div>
+        <ul>
+          <li>1 Compute Instance</li>
+          <li>5 GB Storage</li>
+          <li>Basic Support</li>
+        </ul>
+        <button>Get Started</button>
+      </div>
+      <div class="pricing-card" tabindex="0" aria-label="Pro plan pricing">
+        <h3>Pro</h3>
+        <div class="price">$49<span style="font-size: 1rem;"> / mo</span></div>
+        <ul>
+          <li>10 Compute Instances</li>
+          <li>100 GB Storage</li>
+          <li>24/7 Support</li>
+          <li>Advanced Security</li>
+        </ul>
+        <button>Get Started</button>
+      </div>
+      <div class="pricing-card" tabindex="0" aria-label="Enterprise plan pricing">
+        <h3>Enterprise</h3>
+        <div class="price">Contact Us</div>
+        <ul>
+          <li>Custom Compute</li>
+          <li>Unlimited Storage</li>
+          <li>Dedicated Support</li>
+          <li>Compliance & SLA</li>
+        </ul>
+        <button>Contact Sales</button>
+      </div>
+    </div>
+  </section>
+
+  <button class="floating-btn" aria-label="Get Started with Stackly Cloud">Get Started</button>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 Stackly Cloud Services. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Custom cursor movement
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+    let mouseX = 0, mouseY = 0;
+    let posX = 0, posY = 0;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+    });
+
+    function animate() {
+      posX += (mouseX - posX) / 6;
+      posY += (mouseY - posY) / 6;
+      follower.style.transform = `translate(${posX}px, ${posY}px)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Dark mode toggle
+    const toggle = document.getElementById('toggleDark');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      document.querySelector('header').classList.toggle('dark');
+      toggle.setAttribute('aria-pressed', document.body.classList.contains('dark'));
+    });
+  </script>
+</body>
+</html>
