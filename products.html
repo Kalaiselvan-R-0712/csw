@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stackly Cloud – Products</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+    body.dark {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Animated gradient blobs (copied from index.html) */
+    .blob-1, .blob-2 {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      animation: blobMove 12s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .blob-1 {
+      background: linear-gradient(45deg, #ff7a18, #af002d 70%);
+      width: 320px;
+      height: 320px;
+      top: 12vh;
+      left: 8vw;
+    }
+    .blob-2 {
+      background: linear-gradient(45deg, #00dbde, #fc00ff);
+      width: 280px;
+      height: 280px;
+      bottom: 18vh;
+      right: 12vw;
+      animation-delay: 6s;
+    }
+    @keyframes blobMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(30px, -40px) scale(1.1);
+      }
+    }
+
+    /* Custom Cursor */
+    .cursor, .cursor-follower {
+      position: fixed; top:0; left:0; border-radius:50%;
+      pointer-events:none; mix-blend-mode:difference; z-index:10000;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.3s ease;
+    }
+    .cursor { width: 8px; height: 8px; background: white; z-index: 10001;}
+    .cursor-follower { width: 35px; height: 35px; background: rgba(255,255,255,0.15 ); filter: blur(4px); transition: transform 0.15s ease-out;}
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1240px;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 9999;
+      transition: background-color 0.5s ease;
+    }
+    header.dark {
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 7px;
+    }
+    .logo span {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #ff9900;
+      font-family: 'Poppins', sans-serif;
+      transition: color 0.5s ease;
+      user-select: none;
+    }
+    header.dark .logo span {
+      color: #d97706;
+    }
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 600;
+      color: inherit;
+      font-size: 1rem;
+      text-decoration: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: 5px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #ffbb33;
+      background: rgba(255, 153, 0, 0.1);
+      outline: none;
+    }
+    body.dark nav a {
+      color: #0f172a;
+    }
+    body.dark nav a:hover,
+    body.dark nav a:focus {
+      color: #d97706;
+      background: rgba(217, 119, 6, 0.15);
+    }
+    #toggleDark {
+      cursor: pointer;
+      width: 36px;
+      height: 20px;
+      background: #ff9900;
+      border-radius: 10px;
+      border: none;
+      position: relative;
+      transition: background 0.4s ease;
+    }
+    #toggleDark:focus {
+      outline: 2px solid #ffbb33;
+      outline-offset: 2px;
+    }
+    #toggleDark:before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: left 0.4s ease;
+    }
+    body.dark #toggleDark {
+      background: #d97706;
+    }
+    body.dark #toggleDark:before {
+      left: 18px;
+    }
+
+    /* Main content container */
+    main {
+      max-width: 1240px;
+      margin: 5.3rem auto 4rem auto;
+      padding: 0 3rem;
+      position: relative;
+      z-index: 10;
+    }
+    /* Page title */
+    h1.page-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      background: linear-gradient(90deg, #ffbb33 0%, #ffd24d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
+    /* Filter buttons */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 3rem;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd24d;
+      padding: 0.6rem 1.3rem;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
+    }
+    .filter-btn:hover,
+    .filter-btn:focus,
+    .filter-btn.active {
+      background-color: #ffd24d;
+      color: #0f172a;
+      outline: none;
+    }
+    /* Products grid */
+    .products-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .product-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 2rem 1.4rem 2.2rem 1.4rem;
+      box-shadow: 0 6px 26px rgba(255,210,77,0.24);
+      color: #ffd24d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      cursor: default;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .product-card:hover {
+      transform: scale(1.06) translateY(-6px);
+      background-color: rgba(255,255,255,0.23);
+      box-shadow: 0 12px 38px rgba(255,210,77,0.5);
+    }
+    .product-icon {
+      width: 52px;
+      height: 52px;
+      margin-bottom: 1rem;
+      fill: #ffd24d;
+      filter: drop-shadow(0 3px 10px #ffd24d7f);
+      transition: fill 0.3s ease;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      user-select: text;
+    }
+    .product-desc {
+      font-size: 1.05rem;
+      text-align: center;
+      color: #f0e78f;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      user-select: text;
+    }
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tag {
+      background: rgba(255,210,77,0.6);
+      border-radius: 12px;
+      padding: 3px 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #0f172a;
+      user-select: none;
+      pointer-events: none;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+    /* Footer */
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 1.6rem 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      user-select: none;
+      transition: color 0.5s, background-color 0.5s;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      z-index: 10;
+    }
+    body.dark footer {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    /* Responsive */
+    @media (max-width: 850px) {
+      main {
+        padding: 0 2rem;
+      }
+      .filter-bar {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blob-1" aria-hidden="true"></div>
+  <div class="blob-2" aria-hidden="true"></div>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <header role="banner">
+    <div class="logo" tabindex="0" aria-label="Stackly Cloud Home">
+      <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Cloud Logo" />
+      <span>Stackly Cloud</span>
+    </div>
+    <nav role="navigation" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="products.html" aria-current="page">Products</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="support.html">Support</a>
+      <a href="documentation.html">Documentation</a>
+      <button id="toggleDark" aria-pressed="false" aria-label="Toggle dark mode">🌓</button>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Our Cloud Products</h1>
+    <div class="filter-bar" role="list" aria-label="Filter products by category">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="compute">Compute</button>
+      <button class="filter-btn" data-filter="storage">Storage</button>
+      <button class="filter-btn" data-filter="network">Network</button>
+      <button class="filter-btn" data-filter="ai">AI &amp; ML</button>
+      <button class="filter-btn" data-filter="security">Security</button>
+      <button class="filter-btn" data-filter="databases">Databases</button>
+    </div>
+    <section class="products-grid" aria-live="polite" id="productsGrid">
+      <article class="product-card" data-category="compute" tabindex="0" aria-labelledby="prod1-title" aria-describedby="prod1-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><ellipse cx="32" cy="36" rx="23" ry="15"/><rect x="12" y="23" width="40" height="18" rx="9" fill="#fff" fill-opacity="0.13"/></svg>
+        <h2 id="prod1-title" class="product-title">Cloud Instances</h2>
+        <p id="prod1-desc" class="product-desc">Flexible cloud VMs for every workload — scale on-demand.</p>
+        <div class="tags"><span class="tag">Linux</span><span class="tag">Windows</span></div>
+      </article>
+      <article class="product-card" data-category="compute ai" tabindex="0" aria-labelledby="prod2-title" aria-describedby="prod2-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><ellipse cx="32" cy="32" rx="28" ry="16"/><ellipse cx="32" cy="32" rx="19" ry="7" fill="#fff" fill-opacity=".13"/></svg>
+        <h2 id="prod2-title" class="product-title">GPU Compute</h2>
+        <p id="prod2-desc" class="product-desc">Accelerate AI/ML workloads with powerful GPU instances.</p>
+        <div class="tags"><span class="tag">AI/ML</span><span class="tag">Data Science</span></div>
+      </article>
+      <article class="product-card" data-category="storage" tabindex="0" aria-labelledby="prod3-title" aria-describedby="prod3-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="9" y="23" width="46" height="18" rx="9"/><path d="M32 23v18" stroke="#fff" stroke-width="2"/></svg>
+        <h2 id="prod3-title" class="product-title">Object Storage</h2>
+        <p id="prod3-desc" class="product-desc">S3-compatible storage for data, backups, and media files.</p>
+        <div class="tags"><span class="tag">S3</span><span class="tag">Cheap</span></div>
+      </article>
+      <article class="product-card" data-category="databases" tabindex="0" aria-labelledby="prod4-title" aria-describedby="prod4-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="18" y="16" width="28" height="32" rx="12"/><ellipse cx="32" cy="32" rx="12" ry="8" fill="#fff" fill-opacity="0.13"/></svg>
+        <h2 id="prod4-title" class="product-title">Managed SQL</h2>
+        <p id="prod4-desc" class="product-desc">Auto-scaled MySQL and PostgreSQL with backups.</p>
+        <div class="tags"><span class="tag">SQL</span><span class="tag">Backups</span></div>
+      </article>
+      <article class="product-card" data-category="network" tabindex="0" aria-labelledby="prod5-title" aria-describedby="prod5-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="24"/><path d="M15 32h34M32 15v34" stroke="#fff" stroke-width="2"/></svg>
+        <h2 id="prod5-title" class="product-title">Load Balancer</h2>
+        <p id="prod5-desc" class="product-desc">Global traffic distribution with auto-healing and SSL.</p>
+        <div class="tags"><span class="tag">SSL</span><span class="tag">HA</span></div>
+      </article>
+      <article class="product-card" data-category="security" tabindex="0" aria-labelledby="prod6-title" aria-describedby="prod6-desc">
+        <svg class="product-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="16" y="24" width="32" height="16" rx="8"/><circle cx="32" cy="32" r="6" fill="#fff" fill-opacity="0.13"/></svg>
+        <h2 id="prod6-title" class="product-title">WAF &amp; DDoS Shield</h2>
+        <p id="prod6-desc" class="product-desc">Real-time protection from attacks and zero trust firewall.</p>
+        <div class="tags"><span class="tag">Firewall</span><span class="tag">Zero Trust</span></div>
+      </article>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 Stackly Cloud Services. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Custom cursor movement
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+    let mouseX = 0, mouseY = 0;
+    let posX = 0, posY = 0;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+    });
+
+    function smoothFollower() {
+      posX += (mouseX - posX) / 6;
+      posY += (mouseY - posY) / 6;
+      follower.style.transform = `translate(${posX}px, ${posY}px)`;
+      requestAnimationFrame(smoothFollower);
+    }
+    smoothFollower();
+
+    // Dark mode toggle
+    const toggle = document.getElementById('toggleDark');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      document.querySelector('header').classList.toggle('dark');
+      toggle.setAttribute('aria-pressed', document.body.classList.contains('dark'));
+    });
+
+    // Filter products by category
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const products = document.querySelectorAll('.product-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        products.forEach(prod => {
+          if (filter === 'all' || prod.dataset.category.includes(filter)) {
+            prod.style.display = 'flex';
+            setTimeout(() => prod.classList.add('visible'), 50);
+          } else {
+            prod.classList.remove('visible');
+            setTimeout(() => { prod.style.display = 'none'; }, 300);
+          }
+        });
+      });
+    });
+
+    // Reveal animation on page load
+    window.addEventListener('load', () => {
+      products.forEach((prod, i) => {
+        setTimeout(() => prod.classList.add('visible'), i * 100);
+      });
+    });
+  </script>
+</body>
+</html>

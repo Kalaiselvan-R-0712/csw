@@ -661,23 +661,392 @@
     }
   </style>
 </head>
+  <title>Stackly Cloud Services - Worldclass Design</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+    body.dark {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Animated gradient blobs */
+    .blob-1, .blob-2 {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      animation: blobMove 12s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .blob-1 {
+      background: linear-gradient(45deg, #ff7a18, #af002d 70%);
+      width: 320px;
+      height: 320px;
+      top: 12vh;
+      left: 8vw;
+    }
+    .blob-2 {
+      background: linear-gradient(45deg, #00dbde, #fc00ff);
+      width: 280px;
+      height: 280px;
+      bottom: 18vh;
+      right: 12vw;
+      animation-delay: 6s;
+    }
+    @keyframes blobMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(30px, -40px) scale(1.1);
+      }
+    }
+
+    /* Custom Cursor */
+    .cursor, .cursor-follower {
+      position: fixed; top:0; left:0; border-radius:50%;
+      pointer-events:none; mix-blend-mode:difference; z-index:10000;
+      transform: translate(-50%, -50%);
+      transition: background-color 0.3s ease;
+    }
+    .cursor { width: 8px; height: 8px; background: white; z-index: 10001;}
+    .cursor-follower { width: 35px; height: 35px; background: rgba(255,255,255,0.15 ); filter: blur(4px); transition: transform 0.15s ease-out;}
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1240px;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 9999;
+      transition: background-color 0.5s ease;
+    }
+    header.dark {
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.5s ease;
+    }
+    .logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 7px;
+    }
+    .logo span {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: #ff9900;
+      font-family: 'Poppins', sans-serif;
+      transition: color 0.5s ease;
+      user-select: none;
+    }
+    header.dark .logo span {
+      color: #d97706;
+    }
+    nav {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 600;
+      color: inherit;
+      font-size: 1rem;
+      text-decoration: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: 5px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #ffbb33;
+      background: rgba(255, 153, 0, 0.1);
+      outline: none;
+    }
+    body.dark nav a {
+      color: #0f172a;
+    }
+    body.dark nav a:hover,
+    body.dark nav a:focus {
+      color: #d97706;
+      background: rgba(217, 119, 6, 0.15);
+    }
+    #toggleDark {
+      cursor: pointer;
+      width: 36px;
+      height: 20px;
+      background: #ff9900;
+      border-radius: 10px;
+      border: none;
+      position: relative;
+      transition: background 0.4s ease;
+    }
+    #toggleDark:focus {
+      outline: 2px solid #ffbb33;
+      outline-offset: 2px;
+    }
+    #toggleDark:before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      transition: left 0.4s ease;
+    }
+    body.dark #toggleDark {
+      background: #d97706;
+    }
+    body.dark #toggleDark:before {
+      left: 18px;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: visible;
+      z-index: 10;
+    }
+    .hero-text {
+      max-width: 600px;
+      z-index: 11;
+    }
+    .hero-text h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
+    .hero-text p {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 2.5rem;
+      color: #f0f0f0cc;
+      line-height: 1.6;
+      transition: color 0.5s ease;
+    }
+    .hero-text button {
+      background: #ff9900;
+      border: none;
+      border-radius: 30px;
+      padding: 0.9rem 2.8rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #222;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255 153 0 / 0.6);
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .hero-text button:hover, .hero-text button:focus {
+      background-color: #ffbb33;
+      box-shadow: 0 10px 40px rgba(255 187 51 / 0.8);
+      outline: none;
+    }
+    .hero-text button::after {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background: rgba(255, 255, 255, 0.4);
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.4s ease, opacity 0.6s ease;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-text button:active::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      transition: 0s;
+    }
+    .hero-image {
+      max-width: 480px;
+      position: relative;
+      z-index: 10;
+    }
+    .hero-image svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+      user-select: none;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Services */
+    section.services {
+      max-width: 1240px;
+      margin: 5rem auto 3rem auto;
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2.5rem;
+      z-index: 10;
+      position: relative;
+    }
+    .service-card {
+      background: rgba(255 255 255 / 0.1);
+      backdrop-filter: saturate(180%) blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgb(0 0 0 / 0.25);
+      padding: 2rem 1.8rem 2.5rem 1.8rem;
+      color: #e9e9e9;
+      transition: transform 0.35s cubic-bezier(0.2,0.8,0.4,1), box-shadow 0.35s ease, background-color 0.35s ease;
+      cursor: pointer;
+      overflow: hidden;
+      user-select: none;
+      position: relative;
+    }
+    .service-card:hover, .service-card:focus-within{
+      transform: translateY(-15px) scale(1.05);
+      background: rgba(255 255 255 / 0.25);
+      box-shadow: 0 15px 40px rgb(255 153 0 / 0.45);
+      outline: none;
+      color: #ffcc33;
+      z-index: 10;
+    }
+    .service-card h3 {
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      transition: color 0.35s ease;
+    }
+    .service-card p {
+      line-height: 1.5;
+      font-weight: 500;
+      color: #ddd;
+      transition: color 0.35s ease;
+    }
+    .service-icon {
+      width: 50px;
+      margin-bottom: 1.2rem;
+      fill: #ff9900;
+      filter: drop-shadow(0 2px 3px #ffbb33aa);
+      transition: fill 0.35s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .service-card:hover .service-icon, .service-card:focus-within .service-icon {
+      fill: #ffcc33;
+      filter: drop-shadow(0 4px 6px #ffd966cc);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #232f3e;
+      color: white;
+      padding: 1.4rem 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      user-select: none;
+      transition: color 0.5s ease, background-color 0.5s ease;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      z-index: 10;
+    }
+    body.dark footer {
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 2rem;
+        text-align: center;
+        gap: 4rem;
+      }
+      .hero-text h1 {
+        font-size: 2.8rem;
+      }
+      section.services {
+        grid-template-columns: 1fr;
+        padding: 0 2rem;
+      }
+      header {
+        padding: 1rem 1.5rem;
+      }
+      nav {
+        gap: 1.2rem;
+      }
+      .hero-text p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
 <body>
+  <div class="blob-1" aria-hidden="true"></div>
+  <div class="blob-2" aria-hidden="true"></div>
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
 
-  <header id="header" role="banner">
-<div class="logo" tabindex="0" aria-label="Stackly Cloud Home">
-  <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Cloud Logo" style="width:36px; height:36px; object-fit: contain;" />
-  <span>Stackly Cloud</span>
-</div>
+  <header role="banner">
+    <div class="logo" tabindex="0" aria-label="Stackly Cloud Home">
+      <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Cloud Logo" />
+      <span>Stackly Cloud</span>
+    </div>
     <nav role="navigation" aria-label="Primary navigation">
-      <a href="#" tabindex="0">Products</a>
-      <a href="#" tabindex="0">Solutions</a>
-      <a href="#" tabindex="0">Pricing</a>
-      <a href="#" tabindex="0">Documentation</a>
-      <a href="#" tabindex="0">Support</a>
-      <a href="#" tabindex="0">Sign In</a>
-      <button id="toggleDark" aria-pressed="false" aria-label="Toggle dark mode"></button>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="products.html">Products</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="support.html">Support</a>
+      <a href="documentation.html">Documentation</a>
+      <button id="toggleDark" aria-pressed="false" aria-label="Toggle dark mode">🌓</button>
     </nav>
   </header>
 
