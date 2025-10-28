@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Stackly Cloud</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+    }
+    .card {
+      border-radius: 1rem;
+      padding: 1.5rem;
+      background: white;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .dark .card {
+      background: #1e293b;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300">
+
+  <!-- HEADER -->
+  <header class="fixed w-full top-0 z-50 border-b border-slate-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Logo" class="w-12 h-12 rounded-full shadow-lg group-hover:scale-105 transition" />
+        <span class="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-400 group-hover:underline">Stackly Cloud</span>
+      </a>
+
+      <!-- Header Right -->
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition">Homepage</a>
+        <button id="theme-toggle" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-lg hover:shadow transition">🌙</button>
+        <button id="logoutBtn" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD -->
+  <main class="pt-28 pb-16 px-6 max-w-7xl mx-auto space-y-10">
+    <!-- Welcome -->
+    <section class="text-center">
+      <h1 class="text-3xl font-bold mb-2">Welcome, <span id="adminName" class="text-indigo-600 dark:text-cyan-400">Admin</span> 👋</h1>
+      <p class="text-gray-600 dark:text-gray-400">Here’s your Stackly Cloud admin control center.</p>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="grid md:grid-cols-3 gap-6">
+      <div class="card shadow-md hover:shadow-xl">
+        <h3 class="text-lg font-semibold mb-2 flex items-center gap-2"><i class="fa-solid fa-users text-indigo-500"></i> Total Users</h3>
+        <p class="text-3xl font-bold mb-1">1,254</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Active users this month</p>
+      </div>
+
+      <div class="card shadow-md hover:shadow-xl">
+        <h3 class="text-lg font-semibold mb-2 flex items-center gap-2"><i class="fa-solid fa-chart-pie text-cyan-500"></i> Server Utilization</h3>
+        <p class="text-3xl font-bold mb-1">65%</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">of total capacity in use</p>
+      </div>
+
+      <div class="card shadow-md hover:shadow-xl">
+        <h3 class="text-lg font-semibold mb-2 flex items-center gap-2"><i class="fa-solid fa-dollar-sign text-emerald-500"></i> Revenue</h3>
+        <p class="text-3xl font-bold mb-1">$23,870</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Collected this month</p>
+      </div>
+    </section>
+
+    <!-- Admin Controls -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Admin Controls</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button class="card hover:shadow-lg flex flex-col items-center justify-center gap-2">
+          <i class="fa-solid fa-user-gear text-indigo-500 text-2xl"></i>
+          <span class="font-medium">Manage Users</span>
+        </button>
+        <button class="card hover:shadow-lg flex flex-col items-center justify-center gap-2">
+          <i class="fa-solid fa-server text-cyan-500 text-2xl"></i>
+          <span class="font-medium">Monitor Servers</span>
+        </button>
+        <button class="card hover:shadow-lg flex flex-col items-center justify-center gap-2">
+          <i class="fa-solid fa-chart-line text-emerald-500 text-2xl"></i>
+          <span class="font-medium">View Reports</span>
+        </button>
+        <button class="card hover:shadow-lg flex flex-col items-center justify-center gap-2">
+          <i class="fa-solid fa-shield-halved text-orange-500 text-2xl"></i>
+          <span class="font-medium">Security Settings</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- System Overview -->
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300">System Overview</h2>
+      <div class="card shadow-md hover:shadow-lg">
+        <p class="text-gray-600 dark:text-gray-300 mb-2">Real-time system status and health overview:</p>
+        <ul class="list-disc pl-5 space-y-2 text-gray-500 dark:text-gray-400">
+          <li>All 12 servers are operational.</li>
+          <li>Backup system last completed: <strong>2 hours ago</strong>.</li>
+          <li>Average response time: <strong>142ms</strong>.</li>
+          <li>Security scans: <strong>No vulnerabilities detected</strong>.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-white to-slate-50 dark:from-gray-900 dark:to-gray-950 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+    © <span id="year"></span> Stackly Cloud Admin Panel. All rights reserved.
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Footer Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Theme toggle
+    const html = document.documentElement;
+    const toggleBtn = document.getElementById("theme-toggle");
+    if (localStorage.getItem("theme") === "dark") {
+      html.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+    }
+    toggleBtn.addEventListener("click", () => {
+      html.classList.toggle("dark");
+      const theme = html.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+      toggleBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+    });
+
+    // Load admin
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const adminEl = document.getElementById("adminName");
+    if (!user || user.role !== "admin") {
+      window.location.href = "login.html";
+    } else {
+      adminEl.textContent = user.name || "Admin";
+    }
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

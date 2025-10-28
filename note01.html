@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Stackly Cloud</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- AOS (Animations) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+  <style>
+    html, body { transition: background-color 0.3s, color 0.3s; }
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+    .input-field {
+      width: 100%;
+      border-radius: 0.5rem;
+      border: 1px solid #cbd5e1;
+      background-color: white;
+      color: #1e293b;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .dark .input-field {
+      background-color: #111827;
+      border-color: #374151;
+      color: #e0e7ff;
+    }
+    .input-field:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px #6366f1;
+    }
+    .dark .input-field:focus {
+      border-color: #06b6d4;
+      box-shadow: 0 0 0 3px #06b6d4;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300">
+
+<!-- HEADER -->
+<header class="fixed w-full top-0 z-50 border-b border-slate-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-20">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <img src="assets/logo/the_stackly_logo.jpg" alt="Stackly Logo" class="w-12 h-12 rounded-full shadow-lg group-hover:scale-105 transition" />
+      <span class="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-400 group-hover:underline">Stackly Cloud</span>
+    </a>
+    <button id="theme-toggle" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg text-lg transition">🌙</button>
+  </div>
+</header>
+
+<!-- REGISTER FORM -->
+<main class="pt-32 pb-16 px-4 flex justify-center items-center">
+  <div data-aos="fade-up" class="w-full max-w-3xl bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8">
+    <h1 class="text-3xl font-bold text-center mb-6">Create Your Stackly Cloud Account</h1>
+    <form id="registerForm" class="grid md:grid-cols-2 gap-6">
+      
+      <div>
+        <label class="block text-sm font-semibold mb-1">Full Name</label>
+        <input type="text" id="name" name="name" required class="input-field capitalize" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Email</label>
+        <input type="email" id="email" name="email" required class="input-field" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Password</label>
+        <input type="password" id="password" name="password" required class="input-field" />
+        <p id="passwordHelp" class="text-xs text-red-500 mt-1"></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" required class="input-field" />
+        <p id="confirmHelp" class="text-xs text-red-500 mt-1"></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required class="input-field" />
+        <p id="dobHelp" class="text-xs text-red-500 mt-1"></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Marital Status</label>
+        <select id="marital" name="marital" required class="input-field">
+          <option value="" disabled selected>Select Status</option>
+          <option>Single</option>
+          <option>Married</option>
+          <option>Divorced</option>
+          <option>Widowed</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Gender</label>
+        <select id="gender" name="gender" required class="input-field">
+          <option value="" disabled selected>Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1">Role</label>
+        <select id="role" name="role" required class="input-field">
+          <option value="" disabled selected>Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
+
+      <div class="md:col-span-2">
+        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold hover:from-indigo-700 hover:to-cyan-600 transition">Register</button>
+      </div>
+    </form>
+
+    <div class="text-center mt-6">
+      <button onclick="continueAsGuest()" class="text-blue-600 hover:underline text-sm">Continue as Guest</button>
+    </div>
+
+    <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-2">
+      Already have an account? 
+      <a href="login.html" class="text-blue-600 hover:underline">Login here</a>.
+    </p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="mt-24 border-t border-slate-200 dark:border-gray-700 bg-gradient-to-b from-white to-slate-50 dark:from-gray-900 dark:to-gray-950 py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+  © <span id="year"></span> Stackly Cloud Services. All rights reserved.
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  // Initialize AOS
+  AOS.init({ duration: 900, offset: 150, once: true });
+
+  // Set footer year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // THEME TOGGLE FIXED ✅
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById("theme-toggle");
+
+  // Apply saved theme from localStorage
+  const currentTheme = localStorage.getItem("theme") || "light";
+  if (currentTheme === "dark") {
+    html.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+  } else {
+    html.classList.remove("dark");
+    toggleBtn.textContent = "🌙";
+  }
+
+  // Toggle theme on button click
+  toggleBtn.addEventListener("click", () => {
+    html.classList.toggle("dark");
+    const newTheme = html.classList.contains("dark") ? "dark" : "light";
+    localStorage.setItem("theme", newTheme);
+    toggleBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+  });
+
+  // Continue as guest
+  function continueAsGuest() {
+    localStorage.setItem("role", "guest");
+    window.location.href = "index.html";
+  }
+
+  // Password Validation
+  const password = document.getElementById("password");
+  const confirm = document.getElementById("confirm-password");
+  const passwordHelp = document.getElementById("passwordHelp");
+  const confirmHelp = document.getElementById("confirmHelp");
+
+  password.addEventListener("input", () => {
+    const valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password.value);
+    passwordHelp.textContent = valid ? "" : "Password must include upper, lower, number, and symbol.";
+  });
+
+  confirm.addEventListener("input", () => {
+    confirmHelp.textContent = password.value !== confirm.value ? "Passwords do not match" : "";
+  });
+
+  // DOB validation
+  const dob = document.getElementById("dob");
+  const dobHelp = document.getElementById("dobHelp");
+  dob.addEventListener("change", () => {
+    const age = new Date().getFullYear() - new Date(dob.value).getFullYear();
+    dobHelp.textContent = age < 18 ? "You must be at least 18 years old." : "";
+  });
+
+  // Register form submission
+  const registerForm = document.getElementById("registerForm");
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const user = {
+      fullName: name.value.trim(),
+      email: email.value.trim(),
+      password: password.value,
+      dob: dob.value,
+      maritalStatus: marital.value,
+      gender: gender.value,
+      role: role.value,
+    };
+
+    const age = new Date().getFullYear() - new Date(dob.value).getFullYear();
+    if (age < 18) return alert("You must be at least 18 years old to register.");
+    if (password.value !== confirm.value) return alert("Passwords do not match.");
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful! Redirecting to login...");
+    window.location.href = "login.html";
+  });
+</script>
+
+</body>
+</html>
+
+      <ul class="mb-8 text-slate-600 dark:text-slate-300 space-y-3 text-left">
+        <li>Up to 50 users</li>
+        <li>100 GB Storage</li>
+        <li>Priority Support</li>
+        <li>Multi-region deployment</li>
+        <li>Automated backups</li>
+      </ul>

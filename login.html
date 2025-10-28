@@ -71,7 +71,7 @@
   <!-- LOGIN SECTION -->
   <main class="pt-32 pb-16 px-4 max-w-md mx-auto">
     <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl shadow-lg p-8 space-y-6 border border-slate-200 dark:border-gray-700">
-      <h1 class="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 to-cyan-400 bg-clip-text text-transparent">Welcome <br>to <br>Stackly Cloud</h1>
+      <h1 class="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 to-cyan-400 bg-clip-text text-transparent">Welcome <br> to <br> Stackly Cloud</h1>
 
       <!-- Role Toggle -->
       <div class="flex justify-center">
@@ -150,7 +150,10 @@
       localStorage.setItem("theme", mode);
       toggleBtn.textContent = mode === "dark" ? "☀️" : "🌙";
     });
-    if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
+    if (localStorage.getItem("theme") === "dark") {
+      html.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+    }
 
     // Role toggle
     const customerBtn = document.getElementById("customerBtn");
@@ -172,7 +175,7 @@
 
     // Password toggle
     const passwordInput = document.getElementById("password");
-    document.getElementById("togglePassword").addEventListener("click", () => {
+    document.getElementById("togglePassword").addEventListener("click", (event) => {
       const isPwd = passwordInput.type === "password";
       passwordInput.type = isPwd ? "text" : "password";
       event.currentTarget.innerHTML = `<i class="fas fa-${isPwd ? "eye-slash" : "eye"}"></i>`;
@@ -181,20 +184,20 @@
     // Login handler
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      const email = email.value.trim();
-      const pwd = password.value.trim();
+      const emailVal = document.getElementById("email").value.trim();
+      const pwdVal = document.getElementById("password").value.trim();
       const role = localStorage.getItem("selectedRole") || "customer";
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const errorMsg = document.getElementById("errorMsg");
 
-      // Hardcoded admin
-      if (role === "admin" && email === "admin@example.com" && pwd === "admin123") {
-        localStorage.setItem("loggedInUser", JSON.stringify({ role, email }));
+      // Hardcoded admin login
+      if (role === "admin" && emailVal === "admin@example.com" && pwdVal === "admin123") {
+        localStorage.setItem("loggedInUser", JSON.stringify({ role, email: emailVal }));
         window.location.href = "admin-dashboard.html";
         return;
       }
 
-      const match = users.find(u => u.email === email && u.password === pwd && u.role === role);
+      const match = users.find(u => u.email === emailVal && u.password === pwdVal && u.role === role);
       if (match) {
         localStorage.setItem("loggedInUser", JSON.stringify(match));
         window.location.href = role === "admin" ? "admin-dashboard.html" : "customer-dashboard.html";
@@ -216,6 +219,8 @@
       const resetEmail = document.getElementById("resetEmail").value.trim();
       if (resetEmail) alert("Reset link sent to " + resetEmail);
     }
+
+    // Continue as Guest
     function continueAsGuest() {
       localStorage.setItem("loggedInUser", JSON.stringify({ role: "guest" }));
       window.location.href = "index.html";
