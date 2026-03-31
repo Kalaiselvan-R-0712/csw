@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Stackly</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ===== ROOT ===== */
+:root{
+--primary:#ff7a00;
+--bg:#fff;
+--card:#ffffff;
+--text:#222;
+--gray:#666;
+}
+
+/* ===== GLOBAL ===== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#fff1e6,#ffe4d6,#fff9f5);
+color:#222;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+/* ===== PRELOADER ===== */
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#ffffff;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.loader-logo{
+width:120px;
+animation:spinLogo 2s ease-in-out infinite;
+}
+
+@keyframes spinLogo{
+0%{transform:scale(.8) rotate(0);opacity:.5}
+50%{transform:scale(1.1) rotate(180deg);opacity:1}
+100%{transform:scale(.8) rotate(360deg);opacity:.5}
+}
+
+/* ===== WRAPPER ===== */
+.auth-wrapper{
+width:100%;
+max-width:420px;
+}
+
+/* ===== BACK ===== */
+.back-home{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:20px;
+color:#666;
+text-decoration:none;
+font-size:14px;
+}
+
+.back-home:hover{
+color:var(--primary);
+}
+
+/* ===== CARD ===== */
+.auth-card{
+padding:40px;
+border-radius:20px;
+background:#fff;
+border:1px solid #eee;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+/* ===== LOGO ===== */
+.auth-logo{
+text-align:center;
+margin-bottom:30px;
+}
+
+.auth-logo img{
+height:60px;
+}
+
+/* ===== ICON ===== */
+.logo-circle{
+width:70px;
+height:70px;
+margin:0 auto 15px;
+border-radius:50%;
+background:linear-gradient(135deg,#ff7a00,#ff9a3c);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:24px;
+}
+
+/* ===== TITLE ===== */
+.auth-card h2{
+text-align:center;
+margin-bottom:10px;
+}
+
+.auth-sub{
+text-align:center;
+color:var(--gray);
+margin-bottom:25px;
+font-size:14px;
+}
+
+/* ===== INPUT ===== */
+.input-group{
+margin-bottom:18px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:6px;
+font-size:13px;
+color:#555;
+}
+
+.input-group input,
+.input-group select{
+width:100%;
+padding:12px 14px;
+border-radius:10px;
+outline:none;
+background:#fff;
+color:#333;
+border:1px solid #ddd;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+border-color:var(--primary);
+}
+
+/* ===== PASSWORD ===== */
+/* ===== PASSWORD WRAPPER ===== */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center; /* Keeps the icon vertically centered to the input */
+}
+
+.password-wrapper input {
+    padding-right: 40px; /* Make room so text doesn't go under the eye */
+}
+
+.password-wrapper span {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensures it stays centered regardless of external labels/errors */
+    z-index: 10;
+}
+
+.password-wrapper span:hover {
+    color: var(--primary);
+}
+
+/* ===== ERROR ===== */
+.error{
+color:var(--primary);
+font-size:12px;
+margin-top:5px;
+display:none;
+}
+
+/* ===== REMEMBER ===== */
+.remember-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+font-size:13px;
+color:#aaa;
+}
+
+.forgot-pass-link{
+color:#aaa;
+text-decoration:none;
+}
+
+.forgot-pass-link:hover{
+color:var(--primary);
+}
+
+/* ===== BUTTON ===== */
+.btn-primary{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#ff7a00;
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-primary:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 30px rgba(255,122,0,0.4);
+}
+
+/* ===== LINK ===== */
+.auth-link{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+}
+
+.auth-link a{
+color:var(--primary);
+text-decoration:none;
+font-weight:600;
+}
+
+/* ===== DEMO ===== */
+.demo-box{
+margin-top:20px;
+background:#0b0b0b;
+padding:15px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.05);
+font-size:13px;
+color:#aaa;
+}
+
+.demo-box ul{
+margin-top:6px;
+padding-left:15px;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+.auth-card{
+padding:25px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+<img src="assets/images/logo/stackly_logo.webp" class="loader-logo">
+</div>
+
+<div class="auth-wrapper">
+
+<a href="index.html" class="back-home">
+← Back to Home
+</a>
+
+<div class="auth-card">
+
+<div class="auth-logo">
+<img src="assets/images/logo/stackly_logo.webp">
+</div>
+
+<h2>Welcome Back</h2>
+<p class="auth-sub">Login to your Stackly account</p>
+
+<form id="loginForm">
+
+<!-- ROLE -->
+<div class="input-group">
+<label>Login As</label>
+<select id="role">
+<option>Administrator</option>
+<option selected>User</option>
+</select>
+</div>
+
+<!-- EMAIL -->
+<div class="input-group">
+<label>Email Address</label>
+<input type="email" id="email" placeholder="you@example.com">
+<p id="emailError" class="error">Invalid email format</p>
+</div>
+
+<!-- PASSWORD -->
+<div class="input-group">
+<label>Password</label>
+<div class="password-wrapper">
+<input type="password" id="password">
+<span id="togglePass"><i class="fa-solid fa-eye"></i></span>
+</div>
+<p id="passError" class="error">
+Min 8 chars, 1 Upper, 1 Lower, 1 Number & 1 Symbol
+</p>
+</div>
+
+<!-- REMEMBER -->
+<div class="remember-row">
+<label><input type="checkbox"> Remember me</label>
+<a href="404.html" class="forgot-pass-link">Forgot password?</a>
+</div>
+
+<button type="submit" class="btn-primary">
+Login
+</button>
+
+<div class="auth-link">
+Don't have an account?
+<a href="register.html">Register</a>
+</div>
+
+<!-- DEMO -->
+<div class="demo-box">
+<b>Demo Credentials:</b>
+<ul>
+<li>Admin: admin@stackly.com</li>
+<li>User: user@stackly.com</li>
+<li>Password: any password</li>
+</ul>
+</div>
+
+</form>
+
+</div>
+</div>
+
+<script>
+
+/* PRELOADER */
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.getElementById("preloader").style.display="none";
+},1000);
+});
+
+/* PASSWORD TOGGLE */
+const password=document.getElementById("password");
+
+document.getElementById("togglePass").onclick=()=>{
+password.type=password.type==="password"?"text":"password";
+};
+
+/* VALIDATION */
+const email=document.getElementById("email");
+const role=document.getElementById("role");
+
+const emailError=document.getElementById("emailError");
+const passError=document.getElementById("passError");
+
+/* ✅ REAL EMAIL REGEX */
+const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/* ✅ STRONG PASSWORD (real websites style) */
+const passPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+document.getElementById("loginForm").addEventListener("submit",(e)=>{
+
+e.preventDefault();
+
+let valid=true;
+
+/* EMAIL CHECK */
+if(!emailPattern.test(email.value)){
+emailError.style.display="block";
+valid=false;
+}else{
+emailError.style.display="none";
+}
+
+/* PASSWORD CHECK */
+if(!passPattern.test(password.value)){
+passError.innerText="Min 8 chars, 1 Upper, 1 Lower, 1 Number & 1 Symbol";
+passError.style.display="block";
+valid=false;
+}else{
+passError.style.display="none";
+}
+
+if(!valid) return;
+
+/* ===== SAVE FULL USER DATA ===== */
+const userData = {
+email: email.value,
+role: role.value,
+loginTime: new Date().toISOString()
+};
+
+/* STORE */
+localStorage.setItem("userData", JSON.stringify(userData));
+localStorage.setItem("isLoggedIn", "true");
+
+/* ===== REDIRECT ===== */
+if(role.value==="Administrator"){
+window.location.href="admin_dashboard.html";
+}else{
+window.location.href="user_dashboard.html";
+}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html> 
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Not Found | Stackly</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Serif+Display&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #222;
+    }
+    .error-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-page h1 {
+      font-size: 6rem;
+      font-weight: 700;
+      color: #0d7a5f;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    }
+    .error-page h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #0d7a5f;
+      font-family: 'Merriweather', serif;
+    }
+    .error-page p {
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      color: #555;
+    }
+    .btn-home {
+      display: inline-block;
+      background: linear-gradient(135deg, #0d7a5f, #0d7a5f);
+      color: #fff;
+      padding: 0.75em 1.8em;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: transform 0.25s, box-shadow 0.3s;
+      box-shadow: 0 6px 16px rgba(255, 105, 180, 0.25);
+    }
+    .btn-home:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(255, 105, 180, 0.4);
+    }
+  </style>
+
+  <style>
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Small devices (phones) */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .shop-grid { gap: 1rem; }
+    }
+
+    /* Tablets */
+    @media (min-width: 601px) and (max-width: 1024px) {
+      .hero h1 { font-size: 2.5rem; }
+      .shop-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    }
+
+    /* Large screens (laptops, desktops) */
+    @media (min-width: 1025px) {
+      .hero h1 { font-size: 3rem; }
+    }
+
+    img, video {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="error-page">
+    <h1>404</h1>
+    <h2>Oops! Page Not Found</h2>
+    <p>
+      Sorry, the page you’re looking for doesn’t exist or has been moved. <br>
+      Let’s get you back on track.
+    </p>
+    <a href="homepage2.html" class="btn-home">⬅ Back to Home</a>
+  </main>
+
+  <script>
+    document.getElementById("year")?.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cloud Services Platform | Stackly</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* GLOBAL */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins",sans-serif;
+}
+
+html, body{
+width:100%;
+overflow-x:hidden;
+}
+
+body{
+background:#fff6f0; /* CLEAN ORANGE */
+overflow-x:hidden;
+}
+
+.container{
+width:92%;
+max-width:1200px;
+margin:auto;
+overflow:visible;
+}
+
+/* HEADER */
+
+header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+width:100%;
+height:80px;
+display:flex;
+align-items:center;
+z-index:9999;
+background:#ffffff;
+box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+/* smooth transition */
+
+.nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.logo img{
+height:42px;
+}
+
+/* NAVIGATION */
+
+.nav-menu{
+display:flex;
+align-items:center;
+gap:40px;
+}
+
+.menu{
+display:flex;
+gap:35px;
+list-style:none;
+}
+
+.menu li a{
+text-decoration:none;
+color:#333;
+font-weight:500;
+transition:color .3s ease;
+}
+
+.menu li a.active{
+color:#ff7a00;
+font-weight:600;
+position:relative;
+}
+
+.menu li a.active::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-6px;
+width:100%;
+height:2px;
+background:#ff7a00;
+border-radius:2px;
+}
+
+.menu li a:hover{
+color:#ff7a00;
+}
+
+/* dropdown */
+
+.dropdown{
+position:relative;
+}
+
+.dropdown-menu{
+position:absolute;
+top:35px;
+left:0;
+background:#fff;
+border-radius:10px;
+padding:10px 0;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:.25s;
+min-width:150px;
+}
+
+.dropdown.active .dropdown-menu{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+}
+
+.dropdown-menu li{
+padding:8px 18px;
+}
+
+/* button */
+
+.contact-btn{
+background:#ff7a00;
+color:#fff;
+border:none;
+padding:12px 28px;
+border-radius:40px;
+cursor:pointer;
+box-shadow:0 6px 18px rgba(255,122,0,.25);
+transition:
+transform .25s ease,
+box-shadow .25s ease;
+}
+
+.contact-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 25px rgba(13,122,95,.3);
+}
+
+/* HERO */
+
+.hero{
+padding-top:120px;
+padding-bottom:40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+gap:60px;
+min-height:calc(100vh - 80px);
+
+/* prevent background jump */
+position:relative;
+z-index:1;
+}
+
+/* HERO TEXT */
+
+.hero-text small{
+color:#ff7a00;
+}
+
+.hero-text h1{
+font-size:48px;
+margin:20px 0;
+}
+
+/* SEARCH */
+
+.search-box{
+display:flex;
+align-items:center;
+background:#fff;
+border-radius:60px;
+padding:12px 20px;
+max-width:520px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+gap:15px;
+}
+
+.search-field{
+display:flex;
+align-items:center;
+gap:10px;
+flex:1;
+}
+
+.search-field i{
+color:#ff7a00;
+}
+
+.search-field input{
+border:none;
+outline:none;
+width:100%;
+}
+
+.divider{
+width:1px;
+height:24px;
+background:#ddd;
+}
+
+.search-btn{
+background:#ff7a00;
+color:#fff;
+border:none;
+padding:10px 24px;
+border-radius:40px;
+cursor:pointer;
+}
+
+.keywords{
+margin-top:14px;
+color:#777;
+font-size:14px;
+}
+
+/* HERO IMAGE */
+
+.hero-img{
+position:relative;
+display:flex;
+justify-content:center;
+align-items:flex-end;
+height:520px;
+max-width:100%;
+overflow:visible;
+}
+
+.hero-img img{
+width:360px;
+max-height:480px;
+object-fit:contain;
+z-index:3;
+}
+
+/* RINGS */
+
+.circle-ring{
+position:absolute;
+border:1px solid rgba(0,0,0,.08);
+border-radius:50%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+.ring1{width:340px;height:340px;}
+.ring2{width:420px;height:420px;}
+.ring3{width:520px;height:520px;}
+
+/* ORBIT DOTS */
+
+.orbit{
+position:absolute;
+width:520px;
+height:520px;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:spin 25s linear infinite;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:50%;
+position:absolute;
+}
+
+.dot1{background:#ff5a5f;top:0;left:50%}
+.dot2{background:#4cc9f0;bottom:0;left:50%}
+.dot3{background:#f72585;left:0;top:50%}
+.dot4{background:#80ed99;right:0;top:50%}
+.dot5{background:#ffbe0b;top:25%;right:20%}
+
+@keyframes spin{
+from{transform:translate(-50%,-50%) rotate(0)}
+to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* FLOATING CARDS */
+
+.float-card{
+position:absolute;
+background:#fff;
+padding:10px 14px;
+border-radius:14px;
+box-shadow:0 15px 40px rgba(0,0,0,.12);
+font-size:12px;
+animation:float 4s ease-in-out infinite;
+z-index:4;
+}
+
+.card-left{
+top:20px;
+left:10px;
+}
+
+.card-right{
+top:40px;
+right:10px;
+}
+
+.card-bottom-left{
+bottom:40px;
+left:0;
+}
+
+.card-hired{
+bottom:30px;
+right:10px;
+width:170px;
+}
+
+.card-hired img{
+width:100%;
+border-radius:10px;
+margin-bottom:6px;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+}
+
+/* RESPONSIVE */
+
+@media (max-width:992px){
+
+.hero{
+grid-template-columns:1fr;
+text-align:center;
+gap:30px;
+}
+
+.hero-img{
+margin-top:40px;
+}
+
+/* DO NOT hide cards */
+.float-card{
+display:block;
+font-size:11px;
+padding:8px 10px;
+}
+
+/* reposition cards for smaller screens */
+.card-left{
+top:-10px;
+left:10%;
+}
+
+.card-right{
+top:-10px;
+right:10%;
+}
+
+.card-bottom-left{
+bottom:-5px;
+left:10%;
+}
+
+.card-hired{
+bottom:-5px;
+right:10%;
+width:130px;
+}
+
+}
+
+@media (max-width:768px){
+
+.nav-menu{
+position:absolute;
+top:80px;
+left:0;
+width:100%;
+background:#fff;
+flex-direction:column;
+gap:20px;
+padding:30px 0;
+max-height:0;
+overflow:hidden;
+transition:.3s;
+}
+
+.nav-menu.active{
+max-height:500px;
+}
+
+.menu{
+flex-direction:column;
+}
+
+.hamburger{
+display:block;
+font-size:24px;
+cursor:pointer;
+}
+
+.search-box{
+flex-direction:column;
+border-radius:20px;
+}
+
+.divider{
+display:none;
+}
+
+.search-btn{
+width:100%;
+}
+
+}
+
+.hamburger{
+display:none;
+}
+
+/* PREMIUM PRELOADER */
+
+#preloader{
+position:fixed;
+width:100%;
+height:100vh;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.loader-logo{
+width:120px;
+animation:spinLogo 2s ease-in-out infinite;
+}
+
+@keyframes spinLogo{
+0%{transform:scale(.8) rotate(0);opacity:.5}
+50%{transform:scale(1.1) rotate(180deg);opacity:1}
+100%{transform:scale(.8) rotate(360deg);opacity:.5}
+}
+
+body.loaded #preloader{
+opacity:0;
+visibility:hidden;
+transition:.4s ease;
+}
+
+/* ABOUT */
+
+.about-section{
+padding:100px 0;
+background:#fff;
+}
+
+.about-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.about-left{
+position:relative;
+overflow:visible;
+}
+
+.about-main{
+width:100%;
+border-radius:18px;
+}
+
+.avatar{
+position:absolute;
+width:60px;
+height:60px;
+border-radius:12px;
+overflow:hidden;
+border:4px solid #fff;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.av1{top:-20px;left:40%;}
+.av2{left:-30px;top:40%;}
+.av3{bottom:-20px;left:45%;}
+.av4{right:-30px;top:35%;}
+
+.video-box{
+position:absolute;
+bottom:40px;
+right:40px;
+width:220px;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.video-box img{
+width:100%;
+}
+
+.play{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#ff7a00;
+width:50px;
+height:50px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+text-decoration:none;   /* 🔥 removes underline */
+}
+
+.play i{
+text-decoration:none;   /* extra safety */
+}
+
+.play:hover,
+.play:focus,
+.play:active{
+text-decoration:none;
+}
+
+.about-right h2{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.about-right span{
+color:#ff7a00;
+}
+
+.about-right p{
+color:#666;
+margin-bottom:25px;
+}
+
+.about-right ul{
+list-style:none;
+margin-bottom:30px;
+}
+
+.about-right li{
+margin-bottom:12px;
+}
+
+.about-right i{
+color:#ff7a00;
+margin-right:10px;
+}
+
+.about-btn{
+background:#ff7a00;
+color:#fff;
+padding:12px 28px;
+border-radius:30px;
+text-decoration:none;
+display:inline-block;
+}
+
+.circle-text{
+position:absolute;
+top:-30px;
+right:-20px;
+width:130px;
+height:130px;
+animation:rotateText 10s linear infinite;
+}
+
+.circle-text svg{
+width:100%;
+height:100%;
+fill:#333;
+font-size:12px;
+letter-spacing:2px;
+}
+
+@keyframes rotateText{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+/* SERVICES SECTION */
+
+.services-section{
+padding:100px 0;
+background:#fff6f0;
+}
+
+.services-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.services-title h2{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.services-title p{
+color:#666;
+}
+
+.services-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.service-card{
+background:#fff;
+padding:35px 30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+transition:.3s;
+text-align:center;
+}
+
+.service-card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+
+.service-icon{
+font-size:40px;
+color:#ff7a00;
+margin-bottom:15px;
+}
+
+.service-card h3{
+margin-bottom:10px;
+}
+
+.service-card p{
+color:#666;
+font-size:14px;
+}
+
+@media(max-width:992px){
+.services-grid{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:600px){
+.services-grid{
+grid-template-columns:1fr;
+}
+}
+
+/* FEATURED JOBS */
+
+.featured-section{
+padding:100px 0;
+background:#fff6f0;
+}
+
+.featured-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:50px;
+}
+
+.featured-header h2{
+font-size:36px;
+}
+
+.browse-btn{
+background:#ff7a00;
+color:#fff;
+padding:10px 22px;
+border-radius:25px;
+text-decoration:none;
+font-size:14px;
+}
+
+.jobs-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.job-card{
+background:#fff;
+padding:22px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.25s;
+}
+
+.job-card:hover{
+transform:translateY(-5px);
+box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+
+.job-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.job-logo{
+width:42px;
+height:42px;
+border-radius:8px;
+}
+
+.job-title{
+font-weight:600;
+margin-bottom:5px;
+}
+
+.job-location{
+font-size:13px;
+color:#777;
+margin-bottom:15px;
+}
+
+.job-tags{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.tag{
+background:#fff1e8;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+color:#555;
+}
+
+.job-bottom{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.apply-btn{
+background:#dfeceb;
+border:none;
+padding:8px 16px;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+}
+
+.job-time{
+font-size:12px;
+color:#ff7a00;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.jobs-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.jobs-grid{
+grid-template-columns:1fr;
+}
+
+.featured-header{
+flex-direction:column;
+gap:15px;
+align-items:flex-start;
+}
+
+}
+
+.apply-btn{
+background:#ffe4d6;
+transition:.25s;
+}
+
+.apply-btn:hover{
+background:#ff7a00;
+color:#fff;
+}
+
+/* FOOTER */
+
+.arch-footer{
+margin-top:100px;
+}
+
+.arch-footer-top{
+background:#ff7a00;
+padding:30px 6%;
+color:#fff;
+}
+
+.arch-footer-top-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+}
+
+.arch-footer-top-item{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.arch-footer-main{
+background:#fff;
+padding:70px 6%;
+}
+
+.arch-footer-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:40px;
+}
+
+.arch-footer-col h3{
+margin-bottom:20px;
+}
+
+.arch-footer-col p{
+font-size:14px;
+color:#777;
+margin-bottom:20px;
+}
+
+.arch-footer-social a{
+margin-right:12px;
+font-size:16px;
+color:#333;
+}
+
+.arch-footer-col ul{
+list-style:none;
+}
+
+.arch-footer-col ul li{
+margin-bottom:10px;
+}
+
+.arch-footer-col ul li a{
+color:#777;
+text-decoration:none;
+}
+
+.arch-newsletter{
+display:flex;
+margin-top:15px;
+}
+
+.arch-newsletter input{
+flex:1;
+padding:10px;
+border:1px solid #ddd;
+}
+
+.arch-newsletter button{
+background:#ff7a00;
+border:none;
+padding:10px 15px;
+color:#fff;
+}
+
+.arch-footer-bottom{
+background:#ff7a00;
+padding:15px 6%;
+color:#fff;
+}
+
+.arch-footer-bottom-flex{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.arch-footer-top-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.arch-footer-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:768px){
+
+.arch-footer-grid{
+grid-template-columns:1fr;
+}
+
+.arch-footer-bottom-flex{
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+}
+
+@media(max-width:768px){
+
+.circle-text{
+top:-10px;
+right:-10px;
+width:100px;
+height:100px;
+}
+
+}
+
+/* GLOBAL & RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg,#fff1e6,#ffe4d6,#fff9f5);
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* HEADER & NAV */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,.06);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.hamburger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* HERO SECTION - REFINED */
+.hero {
+    padding-top: 120px;
+    padding-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    min-height: 80vh;
+}
+
+.hero-img {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.hero-img img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    z-index: 3;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .search-box { margin: auto; }
+}
+
+@media (max-width: 768px) {
+    .hamburger { display: block; }
+    
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #fff;
+        flex-direction: column;
+        padding-top: 50px;
+        transition: 0.3s;
+    }
+    
+    .nav-menu.active { left: 0; }
+    
+    .services-grid, .jobs-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+/* SEARCH BOX */
+.search-box {
+    display: flex;
+    background: #fff;
+    border-radius: 60px;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+@media (max-width: 768px){
+
+.hero{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.hero-img{
+margin-top:30px;
+height:auto;
+}
+
+.hero-img img{
+width:80%;
+max-width:300px;
+}
+
+/* scale floating cards instead of hiding */
+.float-card{
+font-size:10px;
+padding:8px 10px;
+}
+
+/* reduce orbit size */
+.orbit{
+width:350px;
+height:350px;
+}
+
+.ring1{width:220px;height:220px;}
+.ring2{width:300px;height:300px;}
+.ring3{width:380px;height:380px;}
+
+}
+
+@media(max-width:768px){
+
+.about-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.about-left{
+margin-bottom:40px;
+}
+
+.avatar{
+width:45px;
+height:45px;
+}
+
+.video-box{
+width:160px;
+bottom:10px;
+right:10px;
+}
+
+.circle-text{
+display:block;
+top:-15px;
+right:-10px;
+width:90px;
+height:90px;
+}
+
+.circle-text svg{
+font-size:9px;
+}
+
+}
+
+@media(max-width:768px){
+
+.hero-img{
+height:auto;
+}
+
+.hero-img img{
+width:70%;
+max-width:260px;
+}
+
+.orbit{
+width:280px;
+height:280px;
+}
+
+.ring1{width:180px;height:180px;}
+.ring2{width:240px;height:240px;}
+.ring3{width:300px;height:300px;}
+
+}
+
+@media(max-width:768px){
+
+.float-card{
+max-width:140px;
+word-wrap:break-word;
+}
+
+}
+
+@media (max-width: 500px) {
+    .search-box { flex-direction: column; border-radius: 20px; gap: 10px; }
+    .divider { display: none; }
+}
+
+/* GRID HELPERS */
+.services-grid, .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.arch-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+}
+
+/* MOBILE HERO FIX */
+@media (max-width:768px){
+
+.hero{
+grid-template-columns:1fr;
+text-align:center;
+gap:30px;
+}
+
+.hero-img{
+display:flex;
+height:auto;
+margin-top:30px;
+}
+
+.hero-img img{
+width:75%;
+max-width:280px;
+}
+
+/* resize floating cards instead of hiding */
+.float-card{
+font-size:10px;
+padding:6px 10px;
+}
+
+/* reposition cards so they fit mobile */
+.card-left{
+top:-10px;
+left:5%;
+}
+
+.card-right{
+top:-10px;
+right:5%;
+}
+
+.card-bottom-left{
+bottom:0;
+left:5%;
+}
+
+.card-hired{
+bottom:-10px;
+right:5%;
+width:130px;
+}
+
+/* smaller orbit animation */
+.orbit{
+width:300px;
+height:300px;
+}
+
+.ring1{width:200px;height:200px;}
+.ring2{width:260px;height:260px;}
+.ring3{width:320px;height:320px;}
+
+}
+
+@media (max-width:768px){
+
+.hero-img{
+height:auto;
+margin-top:30px;
+padding:20px 0;
+}
+
+.hero-img img{
+width:70%;
+max-width:250px;
+}
+
+/* floating cards mobile fix */
+.float-card{
+font-size:10px;
+padding:6px 10px;
+max-width:120px;
+}
+
+/* reposition cards so they stay inside screen */
+.card-left{
+top:-5px;
+left:8%;
+}
+
+.card-right{
+top:-5px;
+right:8%;
+}
+
+.card-bottom-left{
+bottom:10px;
+left:8%;
+}
+
+.card-hired{
+bottom:0;
+right:8%;
+width:120px;
+}
+
+}
+
+@media(max-width:768px){
+
+.avatar{
+width:40px;
+height:40px;
+}
+
+/* reposition avatars inside image */
+.av1{
+top:-10px;
+left:45%;
+}
+
+.av2{
+left:-5px;
+top:40%;
+}
+
+.av3{
+bottom:-10px;
+left:45%;
+}
+
+.av4{
+right:-5px;
+top:40%;
+}
+
+}
+
+@media (max-width:768px){
+
+.card-left{
+top:-5px;
+left:8%;
+}
+
+.card-right{
+top:-5px;
+right:8%;
+}
+
+.card-bottom-left{
+bottom:10px;
+left:8%;
+}
+
+.card-hired{
+bottom:0;
+right:8%;
+width:120px;
+}
+
+}
+
+.arch-footer-social{
+display:flex;
+gap:16px;
+margin-top:15px;
+}
+
+.arch-footer-social a{
+width:38px;
+height:38px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#f1f4f3;
+color:#333;
+font-size:16px;
+transition:.3s;
+text-decoration:none;   /* removes underline */
+}
+
+.arch-footer-social a i{
+text-decoration:none;   /* ensures icon never shows underline */
+}
+
+.arch-footer-social a:hover{
+background:#ff7a00;
+color:#fff;
+transform:translateY(-3px);
+box-shadow:0 8px 20px rgba(13,122,95,.35);
+}
+
+.arch-footer-bottom a{
+color:#fff;
+margin-left:20px;
+text-decoration:none;
+font-weight:500;
+transition:.3s;
+}
+
+.arch-footer-bottom a:hover{
+text-decoration:underline;
+opacity:.8;
+}
+
+@media (max-width:768px){
+.hero{
+grid-template-columns:1fr;
+}
+
+.hero-text{
+order:1;
+}
+
+.hero-img{
+order:2;
+}
+}
+
+.hero{
+position:relative;
+z-index:1;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:100vw;
+height:100%;
+background:#fff1e8;
+z-index:-1;
+}
+
+.about-left{
+order:2;
+}
+
+.about-right{
+order:1;
+}
+
+/* ===== FINAL HERO FIX (ADD ONLY) ===== */
+
+.hero{
+display:flex !important;
+flex-direction:column !important;
+align-items:center !important;
+justify-content:center !important;
+text-align:center !important;
+
+background: url('assets/images/hero_boy.webp') center/cover no-repeat !important;
+
+min-height:100vh !important;
+padding:120px 20px !important;
+position:relative !important;
+}
+
+/* DARK OVERLAY */
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6) !important;
+z-index:1;
+}
+
+/* TEXT ABOVE IMAGE */
+.hero-text{
+position:relative !important;
+z-index:2 !important;
+color:#fff !important;
+max-width:700px;
+}
+
+/* FORCE HIDE OLD IMAGE + CARDS */
+.hero-img,
+.float-card,
+.circle-ring,
+.orbit{
+display:none !important;
+}
+
+/* SEARCH BOX GLASS EFFECT */
+.search-box{
+background:rgba(255,255,255,0.9) !important;
+backdrop-filter:blur(10px);
+}
+
+/* ===== FINAL HERO OVERLAY FIX ===== */
+
+.hero::before{
+left:0 !important;
+transform:none !important;
+width:100% !important;
+background:rgba(0,0,0,0.6) !important;
+}
+
+/* ===== FIX KEYWORDS VISIBILITY ===== */
+
+.keywords{
+color:#fff !important;
+font-weight:500;
+margin-top:18px;
+text-shadow:0 2px 6px rgba(0,0,0,0.5);
+}
+
+.keywords strong{
+color:#ff7a00 !important;
+}
+
+/* ===== CLEAN ABOUT IMAGE (REMOVE CLUTTER) ===== */
+
+.about-left{
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* KEEP ONLY MAIN IMAGE */
+.about-main{
+width:100% !important;
+max-width:600px;
+border-radius:20px;
+box-shadow:0 20px 50px rgba(0,0,0,0.15);
+}
+
+/* HIDE ALL EXTRA CLUTTER */
+.avatar,
+.video-box,
+.circle-text{
+display:none !important;
+}
+
+/* ===== HERO VIDEO BACKGROUND ===== */
+
+.hero{
+position:relative;
+overflow:hidden;
+}
+
+/* VIDEO FULL COVER */
+.hero-video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:0;
+}
+
+/* DARK OVERLAY FOR VISIBILITY */
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(
+rgba(0,0,0,0.75),
+rgba(0,0,0,0.65)
+);
+z-index:1;
+}
+
+/* TEXT ABOVE VIDEO */
+.hero-text{
+position:relative;
+z-index:2;
+color:#fff;
+}
+
+/* SEARCH BOX PREMIUM GLASS */
+.search-box{
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(12px);
+box-shadow:0 10px 40px rgba(0,0,0,0.25);
+}
+
+/* REMOVE IMAGE BACKGROUND FORCEFULLY */
+.hero{
+background:none !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="preloader">
+<img src="assets/images/logo/stackly_logo.webp" class="loader-logo">
+</div>
+
+<header>
+<div class="container nav">
+
+<a href="index.html" class="logo">
+<img src="assets/images/logo/stackly_logo.webp">
+</a>
+
+<div class="hamburger"><i class="fa fa-bars"></i></div>
+
+<div class="nav-menu">
+
+<ul class="menu">
+
+<li class="dropdown">
+
+</li>
+<li><a href="index.html" class="active">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="pricing.html">Pricing</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+
+<a href="login.html">
+<button class="contact-btn">Login / Register</button>
+</a>
+
+</div>
+</div>
+</header>
+
+<section class="hero container">
+
+<!-- VIDEO BACKGROUND -->
+<video class="hero-video" autoplay muted loop playsinline>
+    <source src="assets/videos/hero_bg.mp4" type="video/mp4">
+</video>
+
+<!-- TEXT SECOND -->
+<div class="hero-text">
+
+<small>Scale Your Business with Cloud</small>
+
+<h1>
+Premium <br> Cloud Solutions<br>
+For Modern Businesses
+</h1>
+
+<form class="search-box" id="jobSearchForm">
+
+<div class="search-field">
+<i class="fa fa-search"></i>
+<input type="text" id="jobTitle" placeholder="Service (Cloud Hosting, DevOps, AI...)">
+</div>
+
+<div class="divider"></div>
+
+<div class="search-field">
+<i class="fa fa-location-dot"></i>
+<input type="text" id="jobLocation" placeholder="Your Location">
+</div>
+
+<button class="search-btn">Search</button>
+
+</form>
+
+<div class="keywords">
+<strong>Top Services:</strong>
+Cloud Hosting, DevOps, AI Solutions, Data Storage
+</div>
+
+</div>
+
+</section>
+
+<section class="about-section">
+<div class="container about-grid">
+
+<div class="about-left">
+
+<img src="assets/images/hero_boy.webp" class="about-main">
+
+<div class="avatar av1"><img src="assets/images/card1.webp"></div>
+<div class="avatar av2"><img src="assets/images/card3.webp"></div>
+<div class="avatar av3"><img src="assets/images/card4.webp"></div>
+<div class="avatar av4"><img src="assets/images/card5.webp"></div>
+
+<div class="video-box">
+<img src="assets/images/project3.webp">
+<a href="404.html" class="play">
+<i class="fa fa-play"></i>
+</a>
+</div>
+
+<!-- rotating about text -->
+<div class="circle-text">
+<svg viewBox="0 0 200 200">
+<defs>
+<path id="circlePath"
+d="M 100,100 m -70,0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0"/>
+</defs>
+<text>
+<textPath href="#circlePath">
+• ABOUT US • ABOUT US • ABOUT US • ABOUT US •
+</textPath>
+</text>
+</svg>
+</div>
+
+</div>
+
+<div class="about-right">
+
+<h2>Over <span>10,000+</span> Cloud Deployments Delivered</h2>
+
+<p>
+Tell us your business needs and get matched with top cloud experts. <br> We'll quickly match you with the right freelancers.
+</p>
+
+<ul>
+<li><i class="fa fa-check"></i> Bring to the table win-win survival</li>
+<li><i class="fa fa-check"></i> Capitalize on low hanging fruit to identify</li>
+<li><i class="fa fa-check"></i> But i must explain to you how all this</li>
+</ul>
+
+<a href="404.html" class="about-btn">About us</a>
+
+</div>
+
+</div>
+</section>
+
+<section class="services-section">
+
+<div class="container">
+
+<div class="services-title">
+<h2>Our Cloud Services</h2>
+<p>Explore scalable, secure, and high-performance cloud solutions</p>
+</div>
+
+<div class="services-grid">
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-code"></i></div>
+<h3>Cloud Hosting</h3>
+<p>Deploy and scale applications with secure and high-performance cloud infrastructure.</p>
+</div>
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+<h3>DevOps Automation</h3>
+<p>Streamline development and operations with CI/CD pipelines and automation tools.</p>
+</div>
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-bullhorn"></i></div>
+<h3>AI & Machine Learning</h3>
+<p>Leverage AI-driven insights and automation to enhance your business decisions.</p>
+</div>
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+<h3>Cloud Security</h3>
+<p>Protect your data with advanced security, compliance, and monitoring solutions.</p>
+</div>
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-camera"></i></div>
+<h3>Data Storage & Backup</h3>
+<p>Reliable, scalable, and secure storage solutions with automated backups.</p>
+</div>
+
+<div class="service-card">
+<div class="service-icon"><i class="fa-solid fa-headset"></i></div>
+<h3>24/7 Cloud Support</h3>
+<p>Ensure uptime and performance with round-the-clock expert support.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="arch-footer">
+
+<!-- TOP CONTACT STRIP -->
+<div class="arch-footer-top">
+<div class="arch-footer-top-grid">
+
+<div class="arch-footer-top-item">
+<i class="fa-solid fa-location-dot"></i>
+<div>
+<span>Office Address</span>
+<h4>25 Madison Avenue, New York</h4>
+</div>
+</div>
+
+<div class="arch-footer-top-item">
+<i class="fa-solid fa-envelope"></i>
+<div>
+<span>Email Us</span>
+<h4>support@stackly.com</h4>
+</div>
+</div>
+
+<div class="arch-footer-top-item">
+<i class="fa-solid fa-phone"></i>
+<div>
+<span>Call Anytime</span>
+<h4>+1 (234) 567 8900</h4>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="arch-footer-main">
+
+<div class="arch-footer-grid">
+
+<div class="arch-footer-col">
+
+<a href="index.html" class="footer-logo">
+<img src="assets/images/logo/stackly_logo.webp" height="60">
+</a>
+
+<p>
+Stackly is a premium cloud platform delivering
+scalable, secure, and high-performance cloud solutions.
+</p>
+
+<div class="arch-footer-social">
+
+<a href="404.html" title="Gmail">
+<i class="fa-solid fa-envelope"></i>
+</a>
+
+<a href="404.html" title="LinkedIn">
+<i class="fa-brands fa-linkedin-in"></i>
+</a>
+
+<a href="404.html" title="Twitter">
+<i class="fa-brands fa-twitter"></i>
+</a>
+
+<a href="404.html" title="Facebook">
+<i class="fa-brands fa-facebook-f"></i>
+</a>
+
+<a href="404.html" title="Instagram">
+<i class="fa-brands fa-instagram"></i>
+</a>
+
+</div>
+
+</div>
+
+
+<div class="arch-footer-col">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="pricing.html">Pricing</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+</div>
+
+
+<div class="arch-footer-col">
+<h3>Our Services</h3>
+<ul>
+<li><a href="404.html">Cloud Hosting</a></li>
+<li><a href="404.html">Cloud Security</a></li>
+<li><a href="404.html">DevOps Automation</a></li>
+<li><a href="404.html">Data Storage & Backup</a></li>
+<li><a href="404.html">AI & Machine Learning</a></li>
+</ul>
+</div>
+
+
+<div class="arch-footer-col">
+<h3>Newsletter</h3>
+
+<p>Subscribe for cloud updates & tech insights</p>
+
+<form class="arch-newsletter" id="newsletterForm">
+
+<input
+type="email"
+id="newsletterEmail"
+placeholder="Your Email"
+required
+>
+
+<button type="submit">Subscribe</button>
+
+</form>
+
+</div>
+
+</div>
+</div>
+
+
+<div class="arch-footer-bottom">
+
+<div class="arch-footer-bottom-flex">
+
+<span>© 2026 Stackly Cloud Platform. All Rights Reserved.</span>
+
+<div>
+<a href="404.html">Privacy Policy</a>
+<a href="404.html">Terms & Conditions</a>
+</div>
+
+</div>
+
+</div>
+
+</footer>
+
+<script>
+
+const dropdown=document.querySelector(".dropdown")
+
+dropdown.addEventListener("click",(e)=>{
+e.stopPropagation()
+dropdown.classList.toggle("active")
+})
+
+document.addEventListener("click",()=>{
+dropdown.classList.remove("active")
+})
+
+/* PRELOADER – HALF TIME (625ms) */
+
+window.addEventListener("load",()=>{
+setTimeout(()=>{
+document.body.classList.add("loaded")
+},625)
+})
+
+const form=document.getElementById("jobSearchForm")
+
+form.addEventListener("submit",(e)=>{
+
+e.preventDefault()
+
+const job=document.getElementById("jobTitle").value.trim()
+const loc=document.getElementById("jobLocation").value.trim()
+
+if(!job||!loc){
+alert("Please fill both Job Title and Location")
+return
+}
+
+window.location.href="404.html"
+
+})
+
+const burger=document.querySelector(".hamburger")
+const nav=document.querySelector(".nav-menu")
+
+burger.addEventListener("click",()=>{
+nav.classList.toggle("active")
+})
+
+// APPLY NOW BUTTON REDIRECT
+document.querySelectorAll(".apply-btn").forEach(btn=>{
+btn.addEventListener("click",()=>{
+window.location.href="404.html"
+})
+})
+
+/* NEWSLETTER SUBSCRIBE */
+
+const newsletter=document.getElementById("newsletterForm")
+
+newsletter.addEventListener("submit",(e)=>{
+
+e.preventDefault()
+
+const email=document.getElementById("newsletterEmail").value.trim()
+
+const emailPattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+
+if(!emailPattern.test(email)){
+alert("Please enter a valid email")
+return
+}
+
+window.location.href="404.html"
+
+})
+
+</script>
+
+</body>
+</html>
